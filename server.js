@@ -61,18 +61,27 @@ app.post('/search', (req, res) => {
                 match_categories.push(headers.childNodes[i].rawText);
             }
             var match_record = [];
+            var match_record_2 = [];
             for (let r = 1; r < matchTable.childNodes.length; r++){
                 var tr = matchTable.childNodes[r];
                 var curr_teamname = tr.childNodes[0].rawText;
+                var curr_teamname_2 = tr.childNodes[1].rawText;
                 if (curr_teamname == teamname) {
                     var record = {};
                     for (let i = 0; i < tr.childNodes.length; i++) {
                         record[match_categories[i]] = tr.childNodes[i].rawText;
                     }
                     match_record.push(record);
+                } else if (curr_teamname_2 == teamname) {
+                    var record = {};
+                    for (let i = 0; i < tr.childNodes.length; i++) {
+                        record[match_categories[i]] = tr.childNodes[i].rawText;
+                    }
+                    match_record_2.push(record);
                 }
             }
-        
+            
+            match_record = match_record.concat(match_record_2);
             // console.log(rank_record);
             // console.log(match_record);
 

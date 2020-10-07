@@ -33,6 +33,9 @@ app.post('/search', (req, res) => {
         } else {
             var root = HTMLParser.parse(body);
             var tables = root.querySelectorAll('table');
+            if (tables.length != 2){
+                return res.render("error.html", {teamname, url, errorMsg:"Error: HTML parse error (The url might be wrong)"});
+            }
             var rankTable = tables[0];
             var matchTable = tables[1];
 

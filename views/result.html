@@ -66,6 +66,8 @@
                         <tr class="table-success">
                     <% } else if (match_record[i]['Winner'] == 'None') { %>
                         <tr class="table-secondary">
+                    <% } else if (match_record[i]['Winner'].includes('ONLY FAILED:')) { %>
+                        <tr class="table-warning">
                     <% } else { %>
                         <tr class="table-danger">
                     <% } %>

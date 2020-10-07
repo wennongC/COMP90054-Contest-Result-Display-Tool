@@ -48,7 +48,7 @@ app.post('/search', (req, res) => {
             for (let r = 1; r < rankTable.childNodes.length; r++){
                 var tr = rankTable.childNodes[r];
                 var curr_teamname = tr.childNodes[1].rawText;
-                if (curr_teamname == teamname) {
+                if (curr_teamname == teamname || curr_teamname.includes("staff_team_")) {
                     var record = {};
                     for (let i = 0; i < tr.childNodes.length; i++) {
                         record[rank_categories[i]] = tr.childNodes[i].rawText;

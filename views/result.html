@@ -36,7 +36,11 @@
             </thead>
             <tbody>
                 <% for ( var i =0; i < rank_record.length;i++){ %>
-                    <tr>
+                    <% if (rank_record[i]['Team'] == teamname) { %>
+                        <tr class="table-primary">
+                    <% } else { %>
+                        <tr>
+                    <% }%>
                         <% for ( var c =0; c < rank_categories.length; c++){ %>
                             <td><%= rank_record[i][rank_categories[c]] %></td>
                         <% }%>

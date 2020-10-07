@@ -21,9 +21,13 @@
         <label for="url">Result Page URL</label>
         <input class="form-control" type="text" name="url" value="<%= url %>" placeholder="(e.g. http://115.146.95.253/results_2020-09-24-20-37/results.html )" />
         <br/>
-        <button class="btn btn-primary" >Search</button>
+        <button id="search" class="btn btn-primary" >Search</button>
     </form>
     <hr />
-    <h1><%= errorMsg %></h1>
+    <div id="res">
+        <h1><%= errorMsg %></h1>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

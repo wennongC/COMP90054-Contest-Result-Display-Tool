@@ -6,6 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+app.use(express.static(__dirname + "/assets"));
 app.use(bodyParser.urlencoded({
     extended: false
 }));

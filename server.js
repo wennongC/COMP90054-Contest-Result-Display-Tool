@@ -12,29 +12,65 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.get('/*', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html');
-});
+const getLinkList = function(res, htmlFile, parameters = {}) {
+    const url = "http://115.146.95.253/";
+    request(url, function (error, response, body) {
+        if (error) {
+            res.send("Error: Unable to connect " + url);
+        } else {
+            const dateToString = function(date) {
+                const month = date.slice(5,7);
+                const day = date.slice(8,10);
+                const hour = date.slice(11,13);
+                const minute = date.slice(14,16);
+                const monthStr = ["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+                return `Contest Date: ${Number(day)} ${monthStr[Number(month)]}, ${hour}:${minute}`;
+            }
+            const root = HTMLParser.parse(body);
+            const links = root.querySelectorAll('a');
+            const hrefs = [];
+            const dates = [];
+            links.forEach((a)=>{
+                href = a.rawAttributes.href;
+                date = href.replace('results_','').replace('/results.html','');
+                href = "http://115.146.95.253/" + href;
+                hrefs.push(href);
+                dates.push(dateToString(date));
+            });
+            parameters.hrefs = hrefs;
+            parameters.dates = dates;
+            res.render(htmlFile, parameters);
+        }
+    });
 
+}
+
+app.get('/*', (req, res) => {
+    getLinkList(res, "index.html");
+});
 
 app.post('/search', (req, res) => {
     const {teamname, url} = req.body;
+
+    if (!teamname || !url) {
+        return getLinkList(res, "error.html", {teamname, url, errorMsg: "Error: Teamname or URL is empty"});
+    }
 
     request(url, function (error, response, body) {
         // console.error('error:', error); // Print the error if one occurred
         // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         if (error) {
             var errorMsg = "Unkown Error";
-            res.render("error.html", {teamname, url, errorMsg});
+            return getLinkList(res, "error.html", {teamname, url, errorMsg});
         }
         else if (response.statusCode == 404) {
             var errorMsg = "Error 404. Maybe check your URL";
-            res.render("error.html", {teamname, url, errorMsg});
+            return getLinkList(res, "error.html", {teamname, url, errorMsg});
         } else {
             var root = HTMLParser.parse(body);
             var tables = root.querySelectorAll('table');
             if (tables.length != 2){
-                return res.render("error.html", {teamname, url, errorMsg:"Error: HTML parse error (The url might be wrong)"});
+                return getLinkList(res, "error.html", {teamname, url, errorMsg:"Error: HTML parse error (The url might be wrong)"});
             }
             var rankTable = tables[0];
             var matchTable = tables[1];
@@ -88,7 +124,7 @@ app.post('/search', (req, res) => {
             // console.log(rank_record);
             // console.log(match_record);
 
-            res.render("result.html", {
+            return getLinkList(res, "result.html", {
                 teamname, 
                 url,
                 rank_categories,

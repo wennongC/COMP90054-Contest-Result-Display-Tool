@@ -19,7 +19,14 @@
         <input required class="form-control" type="text" name="teamname" placeholder="(e.g. staff_team_super )" />
         <br/>
         <label for="url">Result Page URL</label>
-        <input required class="form-control" type="text" name="url" placeholder="(e.g. http://115.146.95.253/results_2020-09-24-20-37/results.html )" />
+        <select class="form-control" id="dropdown">
+            <option value="NULL" selected>Select a contest (or fill the URL manually below)</option>
+            <% for (let i = hrefs.length - 1; i >= 0; i-- ) { %>
+                <option value="<%= hrefs[i] %>"><%= dates[i] %></option>
+            <% } %>
+        </select>
+        <br/>
+        <input required class="form-control" type="text" name="url" placeholder="( Type result page url here. Don't forgot 'http://' ! )" />
         <br/>
         <button id="search" class="btn btn-primary" >Search</button>
     </form>

@@ -16,7 +16,7 @@
     <i style="color: red;">Ensure your typing is correct (i.e. no redundant space)</i>
     <form action="search" method="POST">
         <label for="teamname">Team name</label>
-        <input required class="form-control" type="text" name="teamname" placeholder="(e.g. staff_team_super )" />
+        <input class="form-control" type="text" name="teamname" placeholder="(e.g. staff_team_super )" />
         <br/>
         <label for="url">Result Page URL</label>
         <select class="form-control" id="dropdown">
@@ -26,7 +26,7 @@
             <% } %>
         </select>
         <br/>
-        <input required class="form-control" type="text" name="url" placeholder="( Type result page url here. Don't forgot 'http://' ! )" />
+        <input class="form-control" type="text" name="url" placeholder="( Use dropdown menu or Type result page url here. Don't forgot 'http://' ! )" />
         <br/>
         <button id="search" class="btn btn-primary" >Search</button>
     </form>

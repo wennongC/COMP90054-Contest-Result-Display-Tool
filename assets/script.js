@@ -7,9 +7,7 @@ document.getElementById("dropdown").addEventListener('change', function(e) {
     const urlInput = document.getElementsByName('url')[0];
     if (!value || value == "NULL") {
         urlInput.value = "";
-        urlInput.removeAttribute('disabled','');
     } else {
-        urlInput.setAttribute("disabled",'');
         urlInput.value = value;
     }
 });

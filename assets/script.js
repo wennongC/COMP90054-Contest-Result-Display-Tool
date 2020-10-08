@@ -3,7 +3,7 @@ document.getElementById("search").addEventListener('click', function(e){
 });
 
 document.getElementById("dropdown").addEventListener('change', function(e) {
-    value = document.getElementById("dropdown").value;
+    const value = document.getElementById("dropdown").value;
     const urlInput = document.getElementsByName('url')[0];
     if (!value || value == "NULL") {
         urlInput.value = "";
